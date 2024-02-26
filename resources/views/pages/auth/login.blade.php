@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 @section('title', 'Login')
 @section('content')
-	<h1>Login {{ config('app.name') }}</h1>
-	<p class="auth-subtitle mb-5">Sistem Informasi Penerapan Kode Etik Universitas Negeri Gorontalo.</p>
+	<h1>Login {{ $setting->app_name }}</h1>
+	<p class="auth-subtitle mb-5">{{ $setting->app_desc }}</p>
 	<x-main.alerts />
 	<form action="{{ route('auth.login.authenticate') }}" method="POST">
     @csrf

@@ -18,7 +18,7 @@
 
 		{{-- Styles --}}
 		@stack('css')
-		
+
 		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/app-dark.css') }}">
 	</head>
@@ -50,13 +50,14 @@
 				</div>
 
 				<div class="page-content">
+					<x-main.alerts />
 					@yield('content')
 				</div>
 
 				<footer>
 					<div class="footer clearfix text-muted mb-0">
 						<div class="float-start">
-							<p>2024 &copy; {{ config('app.name') }}</p>
+							<p>2024 &copy; {{ $setting->app_name }}</p>
 						</div>
 						<div class="float-end">
 							<p>Developed by <a href="https://jejakode.com">jejakode.com</a></p>
@@ -69,7 +70,6 @@
 		<script src="{{ asset('js/dark.js') }}"></script>
 		<script src="{{ asset('js/extensions/perfect-scrollbar.min.js') }}"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
-		<x-main.alerts />
 		@stack('scripts')
 	</body>
 

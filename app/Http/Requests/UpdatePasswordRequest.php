@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSettingRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,9 +14,9 @@ class UpdateSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'app_name' => 'required',
-            'app_desc' => 'required',
-            'auth_bg' => 'nullable'
+            'old_password' => 'required|current_password',
+            'new_password' => 'required',
+            'confirm_password' => 'required|same:new_password'
         ];
     }
 }

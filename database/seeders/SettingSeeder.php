@@ -17,8 +17,7 @@ class SettingSeeder extends Seeder
 
         Setting::create([
             'app_name' => 'Laravel Mazer',
-            'app_desc' => 'Lorem Ipsum Dolor Sit Amet',
-            'auth_bg' => 'images/default/auth-bg.png',
+            'app_desc' => 'Lorem Ipsum Dolor Sit Amet'
         ]);
     }
 }

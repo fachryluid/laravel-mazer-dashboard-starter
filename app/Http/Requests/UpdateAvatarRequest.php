@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSettingRequest extends FormRequest
+class UpdateAvatarRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,9 +14,7 @@ class UpdateSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'app_name' => 'required',
-            'app_desc' => 'required',
-            'auth_bg' => 'nullable'
+            'avatar' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }

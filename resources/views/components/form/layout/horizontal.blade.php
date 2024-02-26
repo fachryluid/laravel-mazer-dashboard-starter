@@ -1,4 +1,4 @@
-<form action="{{ $action ?? '#' }}" method="{{ $method ?? 'POST' }}" enctype="{{ $enctype ?? '' }}" class="form form-horizontal">
+<form action="{{ $action ?? '#' }}" method="{{ $method && $method == 'GET' ? 'GET' : 'POST' }}" enctype="{{ $enctype ?? '' }}" class="form form-horizontal">
   @csrf
   @method($method ?? 'POST')
   <div class="form-body">
