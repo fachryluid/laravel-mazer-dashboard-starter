@@ -13,14 +13,14 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->string('name', 32);
-            $table->string('username', 8)->unique();
-            $table->string('email', 32)->unique()->nullable();
+            $table->string('username', 16)->unique();
+            $table->string('email', 64)->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->string('phone', 12)->nullable();
             $table->date('birthday')->nullable();
-            $table->string('gender', 6)->nullable();
+            $table->string('gender', 9)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

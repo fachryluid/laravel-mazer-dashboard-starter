@@ -1,10 +1,10 @@
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
-        'Master Pengguna' => null,
+        'Laporan Pengguna' => null,
     ],
 ])
-@section('title', 'Master Pengguna')
+@section('title', 'Laporan Pengguna')
 @push('css')
 	<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -21,9 +21,17 @@
 				</div>
 				<div class="card-body table-responsive px-4">
 					<div class="row">
-						<div class="col-12">
+						<div class="col-6">
+							<label class="form-label">Jenis Pengguna</label>
+							<select class="form-select filter-select-user-role">
+								<option value="">Semua</option>
+								<option value="{{ App\Constants\UserRole::USER }}">{{ App\Constants\UserRole::USER }}</option>
+								<option value="{{ App\Constants\UserRole::ADMIN }}">{{ App\Constants\UserRole::ADMIN }}</option>
+							</select>
+						</div>
+						<div class="col-6">
 							<label class="form-label">Jenis Kelamin</label>
-							<select class="form-select filter-select">
+							<select class="form-select filter-select-user-gender">
 								<option value="">Semua</option>
 								<option value="{{ App\Constants\UserGender::MALE }}">{{ App\Constants\UserGender::MALE }}</option>
 								<option value="{{ App\Constants\UserGender::FEMALE }}">{{ App\Constants\UserGender::FEMALE }}</option>
@@ -38,9 +46,9 @@
         <div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Daftar Pengguna</h4>
 					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.master.user.create') }}" class="btn btn-primary btn-sm">
-							<i class="bi bi-plus-square"></i>
-							Tambah Data
+						<a href="#" class="btn btn-success btn-sm">
+							<i class="bi bi-filetype-pdf"></i>
+							PDF
 						</a>
 					</div>
 				</div>
@@ -68,7 +76,7 @@
 			const table = $('.data-table').DataTable({
 				// processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.master.user.index') }}",
+				ajax: "{{ route('dashboard.reports.users') }}",
 				columns: [{
 						data: 'name',
 						name: 'name'
@@ -91,7 +99,7 @@
 				]
 			});
 
-			$('.filter-select').change(function() {
+			$('.filter-select-user-gender').change(function() {
 				table.column(2).search($(this).val()).draw();
 			});
 		});

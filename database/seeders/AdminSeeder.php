@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\UserGender;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,8 @@ class AdminSeeder extends Seeder
         $user = User::create([
             'name' => 'Admin',
             'username' => 'admin',
+            'email' => 'admin@gmail.com',
+            'gender' => UserGender::MALE,
             'password' => Hash::make('admin')
         ]);
 

@@ -36,7 +36,7 @@
 	                'label' => 'Pengguna',
 	                'icon' => 'bi bi-people-fill',
 	                'hasSubItems' => false,
-	                'link' => '#',
+	                'link' => route('dashboard.reports.users'),
 	            ],
 	        ],
 	    ],

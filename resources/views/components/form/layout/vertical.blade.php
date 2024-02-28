@@ -3,6 +3,6 @@
 	@method($method ?? 'POST')
 	{{ $slot }}
 	<div class="col-sm-12 d-flex justify-content-end">
-		<button type="submit" class="btn btn-primary mb-1 me-1">Submit</button>
+		<button type="submit" class="btn btn-primary mb-1 me-1">{{ $submitText ?? 'Submit' }}</button>
 	</div>
 </form>

@@ -3,11 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Constants\UserGender;
-use App\Constants\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateProfileRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -21,12 +20,12 @@ class UpdateProfileRequest extends FormRequest
             'username' => [
                 'required',
                 'regex:/^[a-zA-Z0-9_]+$/',
-                Rule::unique('users', 'username')->ignore(auth()->user()->id, 'id'),
+                Rule::unique('users', 'username')->ignore($this->user->id, 'id'),
             ],
             'email' => [
                 'nullable',
                 'email',
-                Rule::unique('users', 'email')->ignore(auth()->user()->id, 'id'),
+                Rule::unique('users', 'email')->ignore($this->user->id, 'id'),
             ],
             'phone' => 'nullable|max:12',
             'date' => 'nullable|date',

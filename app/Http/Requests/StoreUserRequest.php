@@ -5,9 +5,8 @@ namespace App\Http\Requests;
 use App\Constants\UserGender;
 use App\Constants\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateProfileRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,17 +16,10 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // 'role' => 'required|in:'.UserRole::USER.','.UserRole::ADMIN.','.UserRole::MANAGER,
             'name' => 'required|string|max:32',
-            'username' => [
-                'required',
-                'regex:/^[a-zA-Z0-9_]+$/',
-                Rule::unique('users', 'username')->ignore(auth()->user()->id, 'id'),
-            ],
-            'email' => [
-                'nullable',
-                'email',
-                Rule::unique('users', 'email')->ignore(auth()->user()->id, 'id'),
-            ],
+            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|unique:users,username',
+            'email' => 'nullable|email|unique:users,email',
             'phone' => 'nullable|max:12',
             'date' => 'nullable|date',
             'gender' => 'nullable|in:'.UserGender::MALE.','.UserGender::FEMALE
