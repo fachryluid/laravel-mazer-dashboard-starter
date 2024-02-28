@@ -13,6 +13,9 @@ return new class extends Migration
             $table->string('app_name');
             $table->string('app_desc');
             $table->string('auth_bg')->nullable();
+            $table->string('report_logo')->nullable();
+            $table->string('app_logo')->nullable();
+            $table->text('report_header');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class UserController extends Controller
         if ($request->ajax()) {
             $data = User::query();
             $data->whereDoesntHave('admin');
+            $data->whereDoesntHave('manager');
 
             return DataTables::of($data)
                 ->addIndexColumn()

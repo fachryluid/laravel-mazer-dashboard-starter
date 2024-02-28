@@ -1,10 +1,10 @@
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
-        'Laporan Pengguna' => null,
+        'Master Admin' => null,
     ],
 ])
-@section('title', 'Laporan Pengguna')
+@section('title', 'Master Admin')
 @push('css')
 	<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -21,17 +21,9 @@
 				</div>
 				<div class="card-body table-responsive px-4">
 					<div class="row">
-						<div class="col-6">
-							<label class="form-label">Jenis Pengguna</label>
-							<select class="form-select filter-select-user-role">
-								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserRole::USER }}">{{ App\Constants\UserRole::USER }}</option>
-								<option value="{{ App\Constants\UserRole::ADMIN }}">{{ App\Constants\UserRole::ADMIN }}</option>
-							</select>
-						</div>
-						<div class="col-6">
+						<div class="col-12">
 							<label class="form-label">Jenis Kelamin</label>
-							<select class="form-select filter-select-user-gender">
+							<select class="form-select filter-select">
 								<option value="">Semua</option>
 								<option value="{{ App\Constants\UserGender::MALE }}">{{ App\Constants\UserGender::MALE }}</option>
 								<option value="{{ App\Constants\UserGender::FEMALE }}">{{ App\Constants\UserGender::FEMALE }}</option>
@@ -44,11 +36,11 @@
 		<div class="col-12">
 			<div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-					<h4 class="card-title pl-1">Daftar Pengguna</h4>
+					<h4 class="card-title pl-1">Daftar Admin</h4>
 					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.reports.users.pdf.preview') }}" class="btn btn-success btn-sm">
-							<i class="bi bi-filetype-pdf"></i>
-							PDF
+						<a href="{{ route('dashboard.admins.create') }}" class="btn btn-primary btn-sm">
+							<i class="bi bi-plus-square"></i>
+							Tambah Data
 						</a>
 					</div>
 				</div>
@@ -59,6 +51,7 @@
 								<th>Nama</th>
 								<th>Email</th>
 								<th>Jenis Kelamin</th>
+								<th style="white-space: nowrap">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -75,7 +68,7 @@
 			const table = $('.data-table').DataTable({
 				// processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.reports.users') }}",
+				ajax: "{{ route('dashboard.admins.index') }}",
 				columns: [{
 						data: 'name',
 						name: 'name'
@@ -88,11 +81,17 @@
 						data: 'gender',
 						name: 'gender',
 						orderable: false,
+					},
+					{
+						data: 'action',
+						name: 'action',
+						orderable: false,
+						searchable: false
 					}
 				]
 			});
 
-			$('.filter-select-user-gender').change(function() {
+			$('.filter-select').change(function() {
 				table.column(2).search($(this).val()).draw();
 			});
 		});

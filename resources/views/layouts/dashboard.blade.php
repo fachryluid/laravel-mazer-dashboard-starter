@@ -71,6 +71,7 @@
 		<script src="{{ asset('js/extensions/perfect-scrollbar.min.js') }}"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
 		@stack('scripts')
+		@stack('scripts2')
 	</body>
 
 </html>

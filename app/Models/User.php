@@ -49,13 +49,13 @@ class User extends Authenticatable
         });
     }
 
-    // public function isAdmin(): bool
-    // {
-    //     return $this->role === 'ADMIN';
-    // }
-
     public function admin(): HasOne
     {
         return $this->hasOne(Admin::class);
+    }
+
+    public function manager(): HasOne
+    {
+        return $this->hasOne(Manager::class);
     }
 }

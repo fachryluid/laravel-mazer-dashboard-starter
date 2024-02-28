@@ -24,7 +24,7 @@
 				<div class="card-body">
 					<div class="d-flex justify-content-center align-items-center flex-column">
 						<label for="change-profile" class="avatar avatar-2xl" id="profile-label">
-							<img src="{{ asset($user->avatar ? 'storage/uploads/avatars/' . $user->avatar : 'images/default/profile-0.jpg') }}" alt="Avatar">
+							<img src="{{ asset($user->avatar ? 'storage/uploads/avatars/' . $user->avatar : 'images/default/profile-0.jpg') }}" alt="Avatar" style="object-fit: cover">
 						</label>
 						<form id="form-change-profile" action="{{ route('dashboard.profile.avatar') }}" method="POST" enctype="multipart/form-data" class="d-none">
 							@csrf
@@ -48,12 +48,12 @@
 						<x-form.input type="date" name="birthday" label="Tanggal Lahir" :value="$user->birthday" placeholder="Tanggal Lahir.." />
 						<x-form.select name="gender" label="Jenis Kelamin" :value="$user->gender" :options="[
 						    (object) [
-						        'label' => 'Laki-laki',
-						        'value' => 'male',
+						        'label' => App\Constants\UserGender::MALE,
+						        'value' => App\Constants\UserGender::MALE,
 						    ],
 						    (object) [
-						        'label' => 'Perempuan',
-						        'value' => 'female',
+						        'label' => App\Constants\UserGender::FEMALE,
+						        'value' => App\Constants\UserGender::FEMALE,
 						    ],
 						]" />
 					</x-form.layout.vertical>

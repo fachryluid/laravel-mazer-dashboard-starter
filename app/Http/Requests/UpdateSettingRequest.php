@@ -16,7 +16,9 @@ class UpdateSettingRequest extends FormRequest
         return [
             'app_name' => 'required',
             'app_desc' => 'required',
-            'auth_bg' => 'nullable'
+            'auth_bg' => 'nullable',
+            'report_logo' => 'nullable',
+            'app_logo' => 'nullable',
         ];
     }
 }

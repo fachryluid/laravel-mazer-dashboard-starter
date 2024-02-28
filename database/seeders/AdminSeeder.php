@@ -23,6 +23,8 @@ class AdminSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@gmail.com',
             'gender' => UserGender::MALE,
+            'birthday' => '2002-10-08',
+            'phone' => '081234567890',
             'password' => Hash::make('admin')
         ]);
 
