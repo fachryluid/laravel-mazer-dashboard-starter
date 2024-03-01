@@ -41,7 +41,7 @@
 						</tr>
 						<tr>
 							<th>No. HP</th>
-							<td>{{ $user->phone ?? '-' }}</td>
+							<td>{{ App\Utils\FormatUtils::phoneNumber($user->phone) ?? '-' }}</td>
 						</tr>
 						<tr>
 							<td colspan="2"></td>

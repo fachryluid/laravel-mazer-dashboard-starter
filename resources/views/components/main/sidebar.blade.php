@@ -37,7 +37,7 @@
 	    ],
 	    (object) [
 	        'title' => 'Laporan',
-	        'roles' => [$_ADMIN, $_MANAGER],
+	        'roles' => [$_MANAGER],
 	        'items' => [
 	            (object) [
 	                'label' => 'Pengguna',
@@ -86,7 +86,10 @@
 								<span class="fs-5 text-primary">{{ $setting->app_name }}</span>
 							</div>
 						@else
-							<img src="{{ asset('images/default/mazer.svg') }}" alt="Logo" srcset="">
+							<div class="d-flex align-items-center gap-2">
+								<img src="{{ asset('images/default/jejakode.svg') }}" alt="Logo" srcset="">
+								<span class="fs-5 text-primary">{{ $setting->app_name }}</span>
+							</div>
 						@endif
 					</a>
 				</div>

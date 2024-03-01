@@ -231,7 +231,7 @@
 												</div>
 											</td>
 											<td class="col-auto">
-												<p class="mb-0">I love your design! It’s so beautiful and unique! How did you learn to do this?</p>
+												<p class="mb-0">I love your design! It's so beautiful and unique! How did you learn to do this?</p>
 											</td>
 										</tr>
 									</tbody>
@@ -243,19 +243,6 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-3">
-			<div class="card">
-				<div class="card-body px-4 py-4">
-					<div class="d-flex align-items-center">
-						<div class="avatar avatar-xl">
-							<img src="{{ asset('images/default.jpg') }}">
-						</div>
-						<div class="name ms-3">
-							<h5 class="font-bold">John Duck</h5>
-							<h6 class="text-muted mb-0">@johnducky</h6>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="card">
 				<div class="card-header">
 					<h4>Recent Messages</h4>

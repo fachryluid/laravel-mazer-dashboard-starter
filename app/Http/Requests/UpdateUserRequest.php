@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
                 'email',
                 Rule::unique('users', 'email')->ignore($this->user->id, 'id'),
             ],
-            'phone' => 'nullable|max:12',
+            'phone' => 'nullable|max:14',
             'date' => 'nullable|date',
             'gender' => 'nullable|in:'.UserGender::MALE.','.UserGender::FEMALE
         ];

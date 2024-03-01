@@ -7,7 +7,7 @@
 	<form action="{{ route('auth.login.authenticate') }}" method="POST">
     @csrf
 		<div class="form-group position-relative has-icon-left mb-4">
-			<input type="username" name="username" class="form-control form-control-xl" placeholder="Username">
+			<input type="username" name="username" class="form-control form-control-xl" placeholder="Username / Email">
 			<div class="form-control-icon">
 				<i class="bi bi-person"></i>
 			</div>

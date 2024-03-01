@@ -102,7 +102,7 @@
 			allowImageFilter: false,
 			allowImageExifOrientation: false,
 			allowImageCrop: false,
-			acceptedFileTypes: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
+			acceptedFileTypes: ["image/png", "image/jpg", "image/jpeg", "image/webp", "image/svg+xml"],
 			fileValidateTypeDetectType: (source, type) =>
 				new Promise((resolve, reject) => {
 					resolve(type)

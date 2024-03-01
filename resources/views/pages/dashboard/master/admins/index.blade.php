@@ -16,7 +16,7 @@
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header">
+				<div class="card-header">
 					<h4 class="card-title pl-1">Filter</h4>
 				</div>
 				<div class="card-body table-responsive px-4">
@@ -35,7 +35,7 @@
 		</div>
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Daftar Admin</h4>
 					<div class="d-flex gap-2">
 						<a href="{{ route('dashboard.admins.create') }}" class="btn btn-primary btn-sm">
@@ -88,7 +88,13 @@
 						orderable: false,
 						searchable: false
 					}
-				]
+				],
+				createdRow: function(row, data, dataIndex) {
+					// Cek apakah kolom email null
+					if (data.email === null || data.email === '') {
+						$('td:eq(1)', row).html('<span class="text-danger">Email kosong</span>');
+					}
+				}
 			});
 
 			$('.filter-select').change(function() {

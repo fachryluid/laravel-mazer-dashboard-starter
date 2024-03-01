@@ -18,16 +18,16 @@
 						<x-form.input layout="horizontal" name="name" label="Nama Lengkap" placeholder="Nama Lengkap.." />
 						<x-form.input layout="horizontal" name="username" label="Username" placeholder="Username.." />
 						<x-form.input layout="horizontal" type="email" name="email" label="Email" placeholder="Email aktif.." />
-						<x-form.input layout="horizontal" name="phone" label="No. HP" placeholder="Nomor HP.." />
+						<x-form.input layout="horizontal" format="phone" name="phone" label="No. HP" placeholder="0812-3456-7890" maxlength="14" />
 						<x-form.input layout="horizontal" type="date" name="birthday" label="Tanggal Lahir" placeholder="Tanggal Lahir.." />
 						<x-form.select layout="horizontal" name="gender" label="Jenis Kelamin" :options="[
 						    (object) [
-						        'label' => 'Laki-laki',
-						        'value' => 'male',
+						        'label' => App\Constants\UserGender::MALE,
+						        'value' => App\Constants\UserGender::MALE,
 						    ],
 						    (object) [
-						        'label' => 'Perempuan',
-						        'value' => 'female',
+						        'label' => App\Constants\UserGender::FEMALE,
+						        'value' => App\Constants\UserGender::FEMALE,
 						    ],
 						]" />
 					</x-form.layout.horizontal>
@@ -36,3 +36,6 @@
 		</div>
 	</section>
 @endsection
+@push('scripts')
+	<script src="{{ asset('js/custom/format-phone.js') }}"></script>
+@endpush

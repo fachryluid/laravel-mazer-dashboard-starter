@@ -46,6 +46,7 @@ class User extends Authenticatable
             if (!$model->exists) {
                 $model->uuid = (string) Uuid::uuid4();
             }
+            $model->phone = str_replace('-', '', $model->phone);
         });
     }
 

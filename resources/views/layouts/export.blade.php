@@ -57,7 +57,7 @@
 			<table>
 				<tr>
 					<td>
-						<img src="{{ isset($setting->report_logo) ? public_path('storage/uploads/settings/' . $setting->report_logo) : public_path('images/default/mazer.svg') }}" alt="Logo">
+						<img src="{{ isset($setting->report_logo) ? public_path('storage/uploads/settings/' . $setting->report_logo) : public_path('images/default/jejakode.png') }}" alt="Logo">
 					</td>
 					<td>
 						{!! $setting->report_header !!}

@@ -19,7 +19,12 @@ class AuthController extends Controller
 
     public function login_authenticate(LoginAuthenticateRequest $request)
     {
-        $credentials = $request->only('username', 'password');
+        $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $field => $request->input('username'),
+            'password' => $request->input('password')
+        ];
 
         if (Auth::attempt($credentials)) {
             return redirect()

@@ -30,7 +30,7 @@
 						    ],
 						]" />
 						<x-form.input layout="horizontal" type="date" name="birthday" label="Tanggal Lahir" :value="$user->birthday" placeholder="Tanggal Lahir.." />
-						<x-form.input layout="horizontal" name="phone" label="No. HP" :value="$user->phone" placeholder="Nomor HP.." />
+						<x-form.input layout="horizontal" format="phone" name="phone" label="No. HP" placeholder="0812-3456-7890" maxlength="14" :value="App\Utils\FormatUtils::phoneNumber($user->phone)" />
 					</x-form.layout.horizontal>
 				</div>
 			</div>
