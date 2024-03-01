@@ -25,7 +25,7 @@ class ManagerSeeder extends Seeder
             'email' => 'manager@gmail.com',
             'gender' => UserGender::MALE,
             'birthday' => '2002-10-08',
-            'phone' => '081234567891',
+            'phone' => '0812-3456-7891',
             'password' => Hash::make('manager')
         ]);
 

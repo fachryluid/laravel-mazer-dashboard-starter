@@ -44,7 +44,7 @@
 						<x-form.input name="name" label="Nama Lengkap" :value="$user->name" />
 						<x-form.input name="username" label="Username" :value="$user->username" />
 						<x-form.input type="email" name="email" label="Email" :value="$user->email" placeholder="Email aktif.." />
-						<x-form.input name="phone" label="No. HP" :value="$user->phone" placeholder="Nomor HP.." />
+						<x-form.input name="phone" format="phone" label="No. HP" maxlength="14" :value="App\Utils\FormatUtils::phoneNumber($user->phone)" />
 						<x-form.input type="date" name="birthday" label="Tanggal Lahir" :value="$user->birthday" placeholder="Tanggal Lahir.." />
 						<x-form.select name="gender" label="Jenis Kelamin" :value="$user->gender" :options="[
 						    (object) [
