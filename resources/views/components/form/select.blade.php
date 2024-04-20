@@ -6,7 +6,7 @@
 		<select name="{{ $name }}" id="{{ $name }}" class="form-select @error($name) is-invalid @enderror {{ $class ?? '' }}">
 			<option value="" hidden>Pilih {{ $label }}</option>
 			@foreach ($options as $option)
-				<option value="{{ $option->value }}" {{ isset($value) && $option->value == $value ? 'selected' : '' }}>{{ $option->label }}</option>
+				<option value="{{ $option->value }}" {{ isset($value) && $option->value == $value || $option->value == old($name) ? 'selected' : '' }}>{{ $option->label }}</option>
 			@endforeach
 		</select>
 		@error($name)
@@ -19,7 +19,7 @@
 		<select name="{{ $name }}" id="{{ $name }}" class="form-select @error($name) is-invalid @enderror {{ $class ?? '' }}">
 			<option value="" hidden>Pilih {{ $label }}</option>
 			@foreach ($options as $option)
-				<option value="{{ $option->value }}" {{ isset($value) && $option->value == $value ? 'selected' : '' }}>{{ $option->label }}</option>
+				<option value="{{ $option->value }}" {{ isset($value) && $option->value == $value || $option->value == old($name) ? 'selected' : '' }}>{{ $option->label }}</option>
 			@endforeach
 		</select>
 		@error($name)

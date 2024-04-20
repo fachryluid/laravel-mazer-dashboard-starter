@@ -3,9 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Constants\UserGender;
-use App\Constants\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateProfileRequest extends FormRequest
 {
@@ -18,19 +16,12 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:32',
-            'username' => [
-                'required',
-                'regex:/^[a-zA-Z0-9_]+$/',
-                Rule::unique('users', 'username')->ignore(auth()->user()->id, 'id'),
-            ],
-            'email' => [
-                'nullable',
-                'email',
-                Rule::unique('users', 'email')->ignore(auth()->user()->id, 'id'),
-            ],
+            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|unique:users,username,' . auth()->user()->id,
+            'email' => 'nullable|email|unique:users,email,' . auth()->user()->id,
             'phone' => 'nullable|max:14',
-            'date' => 'nullable|date',
+            'birthday' => 'nullable|date',
             'gender' => 'nullable|in:'.UserGender::MALE.','.UserGender::FEMALE
         ];
     }
 }
+

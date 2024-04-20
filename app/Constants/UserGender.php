@@ -6,4 +6,6 @@ class UserGender
 {
   public const MALE = 'Laki-laki';
   public const FEMALE = 'Perempuan';
+  
+  // TIDAK LEBIH TIDAK KURANG!
 }

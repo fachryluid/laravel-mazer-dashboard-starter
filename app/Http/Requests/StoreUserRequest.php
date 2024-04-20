@@ -20,8 +20,9 @@ class StoreUserRequest extends FormRequest
             'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|unique:users,username',
             'email' => 'nullable|email|unique:users,email',
             'phone' => 'nullable|max:14',
-            'date' => 'nullable|date',
+            'birthday' => 'nullable|date',
             'gender' => 'nullable|in:'.UserGender::MALE.','.UserGender::FEMALE
         ];
     }
 }
+

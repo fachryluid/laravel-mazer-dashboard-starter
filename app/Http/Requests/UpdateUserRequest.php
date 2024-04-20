@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Constants\UserGender;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -17,19 +16,12 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:32',
-            'username' => [
-                'required',
-                'regex:/^[a-zA-Z0-9_]+$/',
-                Rule::unique('users', 'username')->ignore($this->user->id, 'id'),
-            ],
-            'email' => [
-                'nullable',
-                'email',
-                Rule::unique('users', 'email')->ignore($this->user->id, 'id'),
-            ],
+            'gender' => 'nullable|in:' . UserGender::MALE . ',' . UserGender::FEMALE,
             'phone' => 'nullable|max:14',
-            'date' => 'nullable|date',
-            'gender' => 'nullable|in:'.UserGender::MALE.','.UserGender::FEMALE
+            'birthday' => 'nullable|date',
+            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|unique:users,username,' . $this->user->id,
+            'email' => 'nullable|email|unique:users,email,' . $this->user->id,
         ];
     }
 }
+
