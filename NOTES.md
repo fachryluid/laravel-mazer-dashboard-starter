@@ -3,3 +3,5 @@
 - pisahkan action edit user personal & account
 - ganti nama file assets default
 - gunakan register service provider untuk utils
+- setting seeder berdasarkan env
+- setting seeder create or update
