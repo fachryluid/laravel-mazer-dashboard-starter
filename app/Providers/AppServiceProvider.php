@@ -15,8 +15,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $setting = Setting::where('id', 1)->first();
-        
-        View::share('setting', $setting);
+        View::composer('*', function ($view) {
+            $setting = Setting::where('id', 1)->first();
+            $view->with('setting', $setting);
+        });
     }
 }
