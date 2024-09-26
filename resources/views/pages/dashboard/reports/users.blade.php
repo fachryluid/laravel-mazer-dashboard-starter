@@ -1,3 +1,7 @@
+@php
+	use App\Constants\UserRole;
+	use App\Constants\UserGender;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
@@ -16,25 +20,26 @@
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header">
+				<div class="card-header">
 					<h4 class="card-title pl-1">Filter</h4>
 				</div>
 				<div class="card-body table-responsive px-4">
 					<div class="row">
 						<div class="col-6">
 							<label class="form-label">Jenis Pengguna</label>
-							<select class="form-select filter-select-user-role">
+							<select class="form-select filter-select filter-select-role">
 								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserRole::USER }}">{{ App\Constants\UserRole::USER }}</option>
-								<option value="{{ App\Constants\UserRole::ADMIN }}">{{ App\Constants\UserRole::ADMIN }}</option>
+								@foreach (UserRole::all() as $role)
+									<option value="{{ $role }}">{{ $role }}</option>
+								@endforeach
 							</select>
 						</div>
 						<div class="col-6">
 							<label class="form-label">Jenis Kelamin</label>
-							<select class="form-select filter-select-user-gender">
+							<select class="form-select filter-select filter-select-gender">
 								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserGender::MALE }}">{{ App\Constants\UserGender::MALE }}</option>
-								<option value="{{ App\Constants\UserGender::FEMALE }}">{{ App\Constants\UserGender::FEMALE }}</option>
+								<option value="{{ UserGender::MALE }}">{{ UserGender::MALE }}</option>
+								<option value="{{ UserGender::FEMALE }}">{{ UserGender::FEMALE }}</option>
 							</select>
 						</div>
 					</div>
@@ -43,13 +48,17 @@
 		</div>
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Daftar Pengguna</h4>
 					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.reports.users.pdf.preview') }}" class="btn btn-success btn-sm">
+						<button id="pdf-download" class="btn btn-success btn-sm">
 							<i class="bi bi-filetype-pdf"></i>
-							PDF
-						</a>
+							Unduh
+						</button>
+						<button id="pdf-preview" class="btn btn-success btn-sm">
+							<i class="bi bi-filetype-pdf"></i>
+							Lihat
+						</button>
 					</div>
 				</div>
 				<div class="card-body table-responsive px-4">
@@ -73,9 +82,15 @@
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
-				// processing: true,
+				processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.reports.users') }}",
+				ajax: {
+					url: "{{ route('dashboard.reports.users') }}",
+					data: function(d) {
+						d.role = $('.filter-select-role').val();
+						d.gender = $('.filter-select-gender').val();
+					}
+				},
 				columns: [{
 						data: 'name',
 						name: 'name'
@@ -92,8 +107,26 @@
 				]
 			});
 
-			$('.filter-select-user-gender').change(function() {
-				table.column(2).search($(this).val()).draw();
+			$('.filter-select').change(function() {
+				table.ajax.reload();
+			});
+
+			$('#pdf-preview').click(function(event) {
+				event.preventDefault(); // Prevent default anchor click behavior
+				const role = $('.filter-select-role').val();
+				const gender = $('.filter-select-gender').val();
+				const url = "{{ route('dashboard.reports.users.pdf.preview') }}";
+				const pdfUrl = `${url}?role=${role}&gender=${gender}`;
+				window.open(pdfUrl, '_blank'); // Open in a new window/tab
+			});
+
+			$('#pdf-download').click(function(event) {
+				event.preventDefault(); // Prevent default anchor click behavior
+				const role = $('.filter-select-role').val();
+				const gender = $('.filter-select-gender').val();
+				const url = "{{ route('dashboard.reports.users.pdf.download') }}";
+				const pdfUrl = `${url}?role=${role}&gender=${gender}`;
+				window.open(pdfUrl, '_blank'); // Open in a new window/tab
 			});
 		});
 	</script>

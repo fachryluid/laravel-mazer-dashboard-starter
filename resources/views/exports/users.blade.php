@@ -17,8 +17,8 @@
 					<td>{{ $loop->iteration }}</td>
 					<td>{{ $user->name }}</td>
 					<td>{{ $user->gender }}</td>
-					<td>{{ $user->birthday }}</td>
-					<td>{{ $user->phone }}</td>
+					<td>{{ $user->formatted_birthday }}</td>
+					<td>{{ $user->formatted_phone }}</td>
 				</tr>
 			@endforeach
 		</tbody>

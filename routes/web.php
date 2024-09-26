@@ -35,6 +35,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->gro
     });
     Route::prefix('reports')->name('reports.')->middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
         Route::get('/users', [ReportController::class, 'users'])->name('users');
+        Route::get('/users/pdf/download', [ReportController::class, 'users_pdf_download'])->name('users.pdf.download');
         Route::get('/users/pdf/preview', [ReportController::class, 'users_pdf_preview'])->name('users.pdf.preview');
     });
     Route::prefix('profile')->name('profile.')->middleware([])->group(function () {
