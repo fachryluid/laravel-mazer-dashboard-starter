@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->phone ? FormatUtils::phoneNumber($this->phone) : '-';
     }
+
+    public function getAvatarUrlAttribute()
+    {
+        return asset($this->avatar ? 'storage/avatars/' . $this->avatar : 'images/default/profile-0.jpg');
+    }
 }
