@@ -1,7 +1,5 @@
-- route name user ganti users
-- tambahkan method all di constant
-- pisahkan action edit user personal & account
-- ganti nama file assets default
-- gunakan register service provider untuk utils
-- setting seeder berdasarkan env
-- setting seeder create or update
+- [x] route name user ganti users
+- [x] tambahkan method all di constant
+- [x] pisahkan action edit user personal & account
+- [] setting seeder berdasarkan env
+- [] setting seeder create or update
