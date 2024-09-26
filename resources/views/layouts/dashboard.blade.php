@@ -29,7 +29,7 @@
 					@if (Request::is('dashboard'))
 						<div class="d-flex align-items-center">
 							<div class="avatar avatar-lg">
-								<img src="{{ asset(auth()->user()->avatar ? 'storage/uploads/avatars/' . auth()->user()->avatar : 'images/default/profile-0.jpg') }}" style="object-fit: cover">
+								<img src="{{ auth()->user()->avatar_url }}" style="object-fit: cover">
 							</div>
 							<div class="ms-3">
 								<h6 class="mb-0 font-bold">{{ auth()->user()->name }}</h6>
