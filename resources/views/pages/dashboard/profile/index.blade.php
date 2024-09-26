@@ -1,3 +1,6 @@
+@php
+	use App\Constants\UserGender;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
@@ -12,8 +15,12 @@
 			background-color: #000;
 		}
 
-		#profile-label img:hover {
-			opacity: .9;
+		.avatar:hover img {
+			opacity: 0.8;
+		}
+
+		.avatar:hover #edit-icon {
+			display: block !important;
 		}
 	</style>
 @endpush
@@ -23,16 +30,18 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-center align-items-center flex-column">
-						<label for="change-profile" class="avatar avatar-2xl" id="profile-label">
-							<img src="{{ asset($user->avatar ? 'storage/uploads/avatars/' . $user->avatar : 'images/default/profile-0.jpg') }}" alt="Avatar" style="object-fit: cover">
+						<label for="change-profile" class="avatar avatar-2xl position-relative" id="profile-label">
+							<img src="{{ $user->avatar_url }}" alt="Avatar" style="object-fit: cover">
+							<span class="position-absolute top-50 start-50 translate-middle text-xl text-white" id="edit-icon" style="display: none;">
+								<i class="bi bi-pencil-square"></i>
+							</span>
 						</label>
 						<form id="form-change-profile" action="{{ route('dashboard.profile.avatar') }}" method="POST" enctype="multipart/form-data" class="d-none">
 							@csrf
 							@method('PUT')
 							<input type="file" name="avatar" id="change-profile">
 						</form>
-						<h3 class="mt-3">{{ $user->name }}</h3>
-						<p class="text-small">{{ $user->role }}</p>
+						<h3 class="mb-0 mt-3">{{ $user->name }}</h3>
 					</div>
 				</div>
 			</div>
@@ -44,16 +53,16 @@
 						<x-form.input name="name" label="Nama Lengkap" :value="$user->name" />
 						<x-form.input name="username" label="Username" :value="$user->username" />
 						<x-form.input type="email" name="email" label="Email" :value="$user->email" placeholder="Email aktif.." />
-						<x-form.input name="phone" format="phone" label="No. HP" maxlength="14" :value="App\Utils\FormatUtils::phoneNumber($user->phone)" />
+						<x-form.input name="phone" format="phone" label="No. HP" maxlength="14" :value="$user->formatted_phone" />
 						<x-form.input type="date" name="birthday" label="Tanggal Lahir" :value="$user->birthday" placeholder="Tanggal Lahir.." />
 						<x-form.select name="gender" label="Jenis Kelamin" :value="$user->gender" :options="[
 						    (object) [
-						        'label' => App\Constants\UserGender::MALE,
-						        'value' => App\Constants\UserGender::MALE,
+						        'label' => UserGender::MALE,
+						        'value' => UserGender::MALE,
 						    ],
 						    (object) [
-						        'label' => App\Constants\UserGender::FEMALE,
-						        'value' => App\Constants\UserGender::FEMALE,
+						        'label' => UserGender::FEMALE,
+						        'value' => UserGender::FEMALE,
 						    ],
 						]" />
 					</x-form.layout.vertical>
