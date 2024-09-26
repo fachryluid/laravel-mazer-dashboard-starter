@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Constants\UserGender;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class StoreBasicUserRequest extends FormRequest
 {
     public function authorize(): bool
     {

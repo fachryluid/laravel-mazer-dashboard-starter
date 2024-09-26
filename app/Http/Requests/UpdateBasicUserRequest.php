@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Constants\UserGender;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateBasicUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,8 +16,8 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:32',
-            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|min:4|max:32|unique:users,username,' . $this->user->id,
-            'email' => 'required|email|unique:users,email,' . $this->user->id,
+            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|min:4|max:32|unique:users,username,' . $this->basic_user->user->id,
+            'email' => 'required|email|unique:users,email,' . $this->basic_user->user->id,
             'phone' => 'nullable|max:14',
             'birthday' => 'nullable|date',
             'gender' => 'required|in:' . UserGender::MALE . ',' . UserGender::FEMALE,

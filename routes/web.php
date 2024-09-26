@@ -3,6 +3,7 @@
 use App\Constants\UserRole;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BasicUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
@@ -26,7 +27,7 @@ Route::name('auth.')->group(function () {
 Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::prefix('master')->name('master.')->middleware(['roles:' . UserRole::ADMIN])->group(function () {
-        Route::resource('/users', UserController::class)->names('users');
+        Route::resource('/users', BasicUserController::class)->names('users')->parameters(['users' => 'basic_user']);
         Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('users.update.password');
     });
     Route::prefix('admins')->name('admins.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
