@@ -23,7 +23,7 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
-                        <a href="' . route('dashboard.master.user.show', $row->uuid) . '" class="btn btn-primary btn-sm">
+                        <a href="' . route('dashboard.master.users.show', $row->uuid) . '" class="btn btn-primary btn-sm">
                             <i class="bi bi-list-ul"></i>
                             Detail
                         </a> 
@@ -45,19 +45,20 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         try {
-            User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'birthday' => $request->birthday,
-                'gender' => $request->gender,
-                'password' => Hash::make($request->username)
-            ]);
+            $data = $request->validated();
+            $data['password'] = Hash::make($request->username);
+            User::create($data);
 
-            return redirect()->back()->with('success', 'Data berhasil ditambahkan.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('success', 'Data berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 
@@ -74,17 +75,19 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         try {
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->birthday = $request->birthday;
-            $user->gender = $request->gender;
-            $user->save();
+            $data = $request->validated();
+            $user->update($data);
 
-            return redirect()->back()->with('success', 'Data berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 
@@ -94,16 +97,34 @@ class UserController extends Controller
             $user->password = Hash::make($request->new_password);
             $user->save();
 
-            return redirect()->back()->with('success', 'Password berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('success', 'Password berhasil diperbarui.');
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 
     public function destroy(User $user)
     {
-        $user->delete();
+        try {
+            $user->delete();
 
-        return redirect()->route('dashboard.master.user.index')->with('success', 'Data berhasil dihapus');
+            return redirect()
+                ->route('dashboard.master.users.index')
+                ->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
+        }
     }
 }

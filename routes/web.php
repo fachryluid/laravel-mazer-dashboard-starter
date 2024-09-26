@@ -26,8 +26,8 @@ Route::name('auth.')->group(function () {
 Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::prefix('master')->name('master.')->middleware(['roles:' . UserRole::ADMIN])->group(function () {
-        Route::resource('/users', UserController::class)->names('user');
-        Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('user.update.password');
+        Route::resource('/users', UserController::class)->names('users');
+        Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('users.update.password');
     });
     Route::prefix('admins')->name('admins.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');

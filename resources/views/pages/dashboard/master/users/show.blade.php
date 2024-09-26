@@ -1,7 +1,7 @@
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
-        'Master Pengguna' => route('dashboard.master.user.index'),
+        'Master Pengguna' => route('dashboard.master.users.index'),
         $user->name => null,
     ],
 ])
@@ -13,11 +13,11 @@
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Detail {{ $user->name }}</h4>
 					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.master.user.edit', $user->uuid) }}" class="btn btn-success btn-sm">
+						<a href="{{ route('dashboard.master.users.edit', $user->uuid) }}" class="btn btn-success btn-sm">
 							<i class="bi bi-pencil-square"></i>
 							Edit
 						</a>
-						<x-modal.delete :id="'deleteModal-'. $user->uuid" :route="route('dashboard.master.user.destroy', $user->uuid)" :data="$user->name" text="Hapus" />
+						<x-modal.delete :id="'deleteModal-'. $user->uuid" :route="route('dashboard.master.users.destroy', $user->uuid)" :data="$user->name" text="Hapus" />
 					</div>
 				</div>
 				<div class="card-body px-4">
@@ -37,11 +37,11 @@
 						</tr>
 						<tr>
 							<th>Tanggal Lahir</th>
-							<td>{{ $user->birthday ?? '-' }}</td>
+							<td>{{ $user->formatted_birthday }}</td>
 						</tr>
 						<tr>
 							<th>No. HP</th>
-							<td>{{ App\Utils\FormatUtils::phoneNumber($user->phone) ?? '-' }}</td>
+							<td>{{ $user->formatted_phone }}</td>
 						</tr>
 						<tr>
 							<td colspan="2"></td>

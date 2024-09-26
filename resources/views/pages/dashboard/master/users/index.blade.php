@@ -16,7 +16,7 @@
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header">
+				<div class="card-header">
 					<h4 class="card-title pl-1">Filter</h4>
 				</div>
 				<div class="card-body table-responsive px-4">
@@ -35,10 +35,10 @@
 		</div>
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Daftar Pengguna</h4>
 					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.master.user.create') }}" class="btn btn-primary btn-sm">
+						<a href="{{ route('dashboard.master.users.create') }}" class="btn btn-primary btn-sm">
 							<i class="bi bi-plus-square"></i>
 							Tambah Data
 						</a>
@@ -66,9 +66,9 @@
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
-				// processing: true,
+				processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.master.user.index') }}",
+				ajax: "{{ route('dashboard.master.users.index') }}",
 				columns: [{
 						data: 'name',
 						name: 'name'

@@ -29,7 +29,7 @@
 	                'subItems' => [
 	                    (object) [
 	                        'label' => 'Pengguna',
-	                        'link' => route('dashboard.master.user.index'),
+	                        'link' => route('dashboard.master.users.index'),
 	                    ],
 	                ],
 	            ],

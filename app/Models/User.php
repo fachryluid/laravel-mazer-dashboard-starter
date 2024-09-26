@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Utils\FormatUtils;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,9 +46,7 @@ class User extends Authenticatable
     {
         parent::boot();
         self::saving(function ($model) {
-            if (!$model->exists) {
-                $model->uuid = (string) Uuid::uuid4();
-            }
+            if (!$model->exists) $model->uuid = (string) Uuid::uuid4();
             $model->phone = str_replace('-', '', $model->phone);
         });
     }
@@ -58,5 +59,15 @@ class User extends Authenticatable
     public function manager(): HasOne
     {
         return $this->hasOne(Manager::class);
+    }
+
+    public function getFormattedBirthdayAttribute()
+    {
+        return $this->birthday ? Carbon::parse($this->birthday)->translatedFormat('d/m/Y') : '-';
+    }
+
+    public function getFormattedPhoneAttribute()
+    {
+        return $this->phone ? FormatUtils::phoneNumber($this->phone) : '-';
     }
 }
