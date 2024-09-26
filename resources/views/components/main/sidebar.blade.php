@@ -80,17 +80,10 @@
 			<div class="d-flex justify-content-between align-items-center">
 				<div class="logo">
 					<a href="{{ route('dashboard.index') }}">
-						@if ($setting->app_logo)
-							<div class="d-flex align-items-center gap-2">
-								<img src="{{ asset('storage/uploads/settings/' . $setting->app_logo) }}" alt="Logo" srcset="">
-								<span class="fs-5 text-primary">{{ $setting->app_name }}</span>
-							</div>
-						@else
-							<div class="d-flex align-items-center gap-2">
-								<img src="{{ asset('images/default/jejakode.svg') }}" alt="Logo" srcset="">
-								<span class="fs-5 text-primary">{{ $setting->app_name }}</span>
-							</div>
-						@endif
+						<div class="d-flex align-items-center gap-2">
+							<img src="{{ $setting->app_logo_url }}" alt="Logo" srcset="">
+							<span class="fs-5 text-primary">{{ $setting->app_name }}</span>
+						</div>
 					</a>
 				</div>
 				<div class="theme-toggle d-flex align-items-center gap-2">

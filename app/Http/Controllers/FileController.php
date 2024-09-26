@@ -12,7 +12,7 @@ class FileController extends Controller
     {
         $setting = Setting::where('id', 1)->first();
 
-        $filePath = 'storage/uploads/settings/' . $setting->auth_bg;
+        $filePath = 'storage/settings/' . $setting->auth_bg;
         $fileContent = file_get_contents($filePath);
         $mimeType = mime_content_type($filePath);
 
@@ -24,7 +24,7 @@ class FileController extends Controller
     {
         $setting = Setting::where('id', 1)->first();
 
-        $filePath = 'storage/uploads/settings/' . $setting->report_logo;
+        $filePath = 'storage/settings/' . $setting->report_logo;
         $fileContent = file_get_contents($filePath);
         $mimeType = mime_content_type($filePath);
 
@@ -36,7 +36,7 @@ class FileController extends Controller
     {
         $setting = Setting::where('id', 1)->first();
 
-        $filePath = 'storage/uploads/settings/' . $setting->app_logo;
+        $filePath = 'storage/settings/' . $setting->app_logo;
         $fileContent = file_get_contents($filePath);
         $mimeType = mime_content_type($filePath);
 
