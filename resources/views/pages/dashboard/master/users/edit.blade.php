@@ -33,7 +33,7 @@
 						    ],
 						]" />
 						<x-form.input layout="horizontal" type="date" name="birthday" label="Tanggal Lahir" :value="$basicUser->user->birthday" placeholder="Tanggal Lahir.." />
-						<x-form.input layout="horizontal" format="phone" name="phone" label="No. HP" placeholder="0812-3456-7890" maxlength="14" :value="FormatUtils::phoneNumber($basicUser->user->phone)" />
+						<x-form.input layout="horizontal" format="phone" name="phone" label="No. HP" placeholder="0812-3456-7890" maxlength="14" :value="$basicUser->user->formatted_phone" />
 						<h6 class="mb-4 mt-4">Akun</h6>
 						<x-form.input layout="horizontal" name="username" label="Username" :value="$basicUser->user->username" />
 						<x-form.input layout="horizontal" type="email" name="email" label="Email" :value="$basicUser->user->email" placeholder="Email aktif.." />
@@ -53,3 +53,6 @@
 		</div>
 	</section>
 @endsection
+@push('scripts')
+	<script src="{{ asset('js/custom/format-phone.js') }}"></script>
+@endpush

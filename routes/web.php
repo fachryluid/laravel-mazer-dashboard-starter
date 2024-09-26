@@ -30,15 +30,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->gro
         Route::resource('/users', BasicUserController::class)->names('users')->parameters(['users' => 'basic_user']);
         Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('users.update.password');
     });
-    Route::prefix('admins')->name('admins.')->middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('index');
-        Route::get('/create', [AdminController::class, 'create'])->name('create');
-        Route::post('/store', [AdminController::class, 'store'])->name('store');
-        Route::get('/{user}', [AdminController::class, 'show'])->name('show');
-        Route::get('/{user}/edit', [AdminController::class, 'edit'])->name('edit');
-        Route::put('/{user}/update', [AdminController::class, 'update'])->name('update');
-        Route::put('/{user}/update/password', [AdminController::class, 'update_password'])->name('update.password');
-        Route::delete('/{user}/destroy', [AdminController::class, 'destroy'])->name('destroy');
+    Route::middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
+        Route::resource('/admins', AdminController::class)->names('admins');
     });
     Route::prefix('reports')->name('reports.')->middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
         Route::get('/users', [ReportController::class, 'users'])->name('users');

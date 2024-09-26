@@ -1,3 +1,6 @@
+@php
+	use App\Constants\UserGender;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
@@ -23,10 +26,10 @@
 					<div class="row">
 						<div class="col-12">
 							<label class="form-label">Jenis Kelamin</label>
-							<select class="form-select filter-select">
+							<select class="form-select filter-select filter-select-gender">
 								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserGender::MALE }}">{{ App\Constants\UserGender::MALE }}</option>
-								<option value="{{ App\Constants\UserGender::FEMALE }}">{{ App\Constants\UserGender::FEMALE }}</option>
+								<option value="{{ UserGender::MALE }}">{{ UserGender::MALE }}</option>
+								<option value="{{ UserGender::FEMALE }}">{{ UserGender::FEMALE }}</option>
 							</select>
 						</div>
 					</div>
@@ -66,19 +69,24 @@
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
-				// processing: true,
+				processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.admins.index') }}",
+				ajax: {
+					url: "{{ route('dashboard.admins.index') }}",
+					data: function(d) {
+						d.gender = $('.filter-select-gender').val();
+					}
+				},
 				columns: [{
-						data: 'name',
+						data: 'user.name',
 						name: 'name'
 					},
 					{
-						data: 'email',
+						data: 'user.email',
 						name: 'email'
 					},
 					{
-						data: 'gender',
+						data: 'user.gender',
 						name: 'gender',
 						orderable: false,
 					},
@@ -89,16 +97,10 @@
 						searchable: false
 					}
 				],
-				createdRow: function(row, data, dataIndex) {
-					// Cek apakah kolom email null
-					if (data.email === null || data.email === '') {
-						$('td:eq(1)', row).html('<span class="text-danger">Email kosong</span>');
-					}
-				}
 			});
 
 			$('.filter-select').change(function() {
-				table.column(2).search($(this).val()).draw();
+				table.ajax.reload();
 			});
 		});
 	</script>

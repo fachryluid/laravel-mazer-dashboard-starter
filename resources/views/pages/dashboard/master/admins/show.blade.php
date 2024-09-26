@@ -2,7 +2,7 @@
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
         'Master Admin' => route('dashboard.admins.index'),
-        $user->name => null,
+        $admin->user->name => null,
     ],
 ])
 @section('title', 'Detail Admin')
@@ -11,13 +11,13 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h4 class="card-title pl-1">Detail {{ $user->name }}</h4>
+					<h4 class="card-title pl-1">Detail {{ $admin->user->name }}</h4>
 					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.admins.edit', $user->uuid) }}" class="btn btn-success btn-sm">
+						<a href="{{ route('dashboard.admins.edit', $admin->uuid) }}" class="btn btn-success btn-sm">
 							<i class="bi bi-pencil-square"></i>
 							Edit
 						</a>
-						<x-modal.delete :id="'deleteModal-'. $user->uuid" :route="route('dashboard.admins.destroy', $user->uuid)" :data="$user->name" text="Hapus" />
+						<x-modal.delete :id="'deleteModal-'. $admin->uuid" :route="route('dashboard.admins.destroy', $admin->uuid)" :data="$admin->user->name" text="Hapus" />
 					</div>
 				</div>
 				<div class="card-body px-4">
@@ -29,19 +29,19 @@
 						</tr>
 						<tr>
 							<th>Nama</th>
-							<td>{{ $user->name }}</td>
+							<td>{{ $admin->user->name }}</td>
 						</tr>
 						<tr>
 							<th>Jenis Kelamin</th>
-							<td>{{ $user->gender ?? '-' }}</td>
+							<td>{{ $admin->user->gender ?? '-' }}</td>
 						</tr>
 						<tr>
 							<th>Tanggal Lahir</th>
-							<td>{{ $user->birthday ?? '-' }}</td>
+							<td>{{ $admin->user->formatted_birthday }}</td>
 						</tr>
 						<tr>
 							<th>No. HP</th>
-							<td>{{ App\Utils\FormatUtils::phoneNumber($user->phone) ?? '-' }}</td>
+							<td>{{ $admin->user->formatted_phone }}</td>
 						</tr>
 						<tr>
 							<td colspan="2"></td>
@@ -53,11 +53,11 @@
 						</tr>
 						<tr>
 							<th>Username</th>
-							<td>{{ $user->username }}</td>
+							<td>{{ $admin->user->username }}</td>
 						</tr>
 						<tr>
 							<th>Email</th>
-							<td>{{ $user->email ?? '-' }}</td>
+							<td>{{ $admin->user->email ?? '-' }}</td>
 						</tr>
 					</table>
 				</div>

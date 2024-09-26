@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
-use App\Http\Requests\UpdateUserPasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,9 +16,16 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::query();
-            $data->whereHas('admin');
-            
+            $query = Admin::query();
+
+            if (isset($request->gender)) {
+                $query->whereHas('user', function ($q) use ($request) {
+                    $q->where('gender', $request->gender);
+                });
+            }
+
+            $data = $query->with('user')->latest()->get();
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -44,78 +51,78 @@ class AdminController extends Controller
 
     public function store(StoreAdminRequest $request)
     {
-        try {
-            $user = User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'birthday' => $request->birthday,
-                'gender' => $request->gender,
-                'password' => Hash::make($request->username)
-            ]);
+        DB::beginTransaction();
 
+        try {
+            $data = $request->validated();
+            $data['password'] = Hash::make($request->username);
+            $user = User::create($data);
             Admin::create([
                 'user_id' => $user->id
             ]);
 
-            return redirect()->back()->with('success', 'Data berhasil ditambahkan.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Data berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 
-    public function show(User $user)
+    public function show(Admin $admin)
     {
-        return view('pages.dashboard.master.admins.show', compact('user'));
+        return view('pages.dashboard.master.admins.show', compact('admin'));
     }
 
-    public function edit(User $user)
+    public function edit(Admin $admin)
     {
-        return view('pages.dashboard.master.admins.edit', compact('user'));
+        return view('pages.dashboard.master.admins.edit', compact('admin'));
     }
 
-    public function update(UpdateAdminRequest $request, User $user)
+    public function update(UpdateAdminRequest $request, Admin $admin)
     {
         try {
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->birthday = $request->birthday;
-            $user->gender = $request->gender;
-            $user->save();
+            $data = $request->validated();
+            $admin->user->update($data);
 
-            return redirect()->back()->with('success', 'Data berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 
-    public function update_password(UpdateUserPasswordRequest $request, User $user)
-    {
-        try {
-            $user->password = Hash::make($request->new_password);
-            $user->save();
-
-            return redirect()->back()->with('success', 'Password berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
-        }
-    }
-
-    public function destroy(User $user)
+    public function destroy(Admin $admin)
     {
         try {
             if (Admin::count() === 1) {
-                throw new \Error('Anda tidak dapat menghapus data terakhir.');
+                throw new \Exception('Tidak dapat menghapus Admin terakhir.');
             }
-    
-            $user->delete();
-    
+
+            $admin->user->delete();
+
             return redirect()->route('dashboard.admins.index')->with('success', 'Data berhasil dihapus');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 }

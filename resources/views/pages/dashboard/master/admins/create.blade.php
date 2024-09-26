@@ -36,3 +36,6 @@
 		</div>
 	</section>
 @endsection
+@push('scripts')
+	<script src="{{ asset('js/custom/format-phone.js') }}"></script>
+@endpush
