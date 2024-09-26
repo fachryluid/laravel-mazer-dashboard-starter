@@ -26,11 +26,11 @@ Route::name('auth.')->group(function () {
 
 Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-    Route::prefix('master')->name('master.')->middleware(['roles:' . UserRole::ADMIN])->group(function () {
+    Route::prefix('master')->name('master.')->middleware(['roles:' . implode(',', [UserRole::ADMIN])])->group(function () {
         Route::resource('/users', BasicUserController::class)->names('users')->parameters(['users' => 'basic_user']);
         Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('users.update.password');
     });
-    Route::prefix('admins')->name('admins.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
+    Route::prefix('admins')->name('admins.')->middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/create', [AdminController::class, 'create'])->name('create');
         Route::post('/store', [AdminController::class, 'store'])->name('store');
@@ -40,7 +40,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->gro
         Route::put('/{user}/update/password', [AdminController::class, 'update_password'])->name('update.password');
         Route::delete('/{user}/destroy', [AdminController::class, 'destroy'])->name('destroy');
     });
-    Route::prefix('reports')->name('reports.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
+    Route::prefix('reports')->name('reports.')->middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
         Route::get('/users', [ReportController::class, 'users'])->name('users');
         Route::get('/users/pdf/preview', [ReportController::class, 'users_pdf_preview'])->name('users.pdf.preview');
     });
@@ -53,7 +53,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->gro
         Route::get('/', [SecurityController::class, 'index'])->name('index');
         Route::put('/update/password', [SecurityController::class, 'update_password'])->name('update.password');
     });
-    Route::prefix('setting')->name('setting.')->middleware([])->group(function () {
+    Route::prefix('setting')->name('setting.')->middleware(['roles:' . implode(',', [UserRole::ADMIN])])->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('index');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
         Route::get('/load-file/auth-bg', [FileController::class, 'loadFileAuthBg']);

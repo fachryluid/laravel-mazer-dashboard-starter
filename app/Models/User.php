@@ -49,9 +49,29 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return isset($this->admin);
+    }
+
     public function manager(): HasOne
     {
         return $this->hasOne(Manager::class);
+    }
+
+    public function isManager(): bool
+    {
+        return isset($this->manager);
+    }
+
+    public function basic_user(): HasOne
+    {
+        return $this->hasOne(BasicUser::class);
+    }
+
+    public function isBasicUser(): bool
+    {
+        return isset($this->basic_user);
     }
 
     public function getFormattedBirthdayAttribute()
