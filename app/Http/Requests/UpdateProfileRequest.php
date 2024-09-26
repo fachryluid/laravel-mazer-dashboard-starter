@@ -16,12 +16,11 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:32',
-            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|unique:users,username,' . auth()->user()->id,
-            'email' => 'nullable|email|unique:users,email,' . auth()->user()->id,
-            'phone' => 'nullable|max:14',
-            'birthday' => 'nullable|date',
-            'gender' => 'nullable|in:'.UserGender::MALE.','.UserGender::FEMALE
+            'username' => 'required|regex:/^[a-zA-Z0-9_]+$/|min:4|max:32|unique:users,username,' . auth()->user()->id,
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+            'phone' => 'required|max:14',
+            'birthday' => 'required|date',
+            'gender' => 'required|in:' . UserGender::MALE . ',' . UserGender::FEMALE
         ];
     }
 }
-

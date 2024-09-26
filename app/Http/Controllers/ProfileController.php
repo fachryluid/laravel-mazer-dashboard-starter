@@ -19,19 +19,18 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         try {
+            $data = $request->validated();
             $user = User::where('id', auth()->user()->id)->first();
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->birthday = $request->birthday;
-            $user->gender = $request->gender;
-
-            $user->save();
+            $user->update($data);
 
             return redirect()->back()->with('success', 'Data berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 
@@ -41,15 +40,20 @@ class ProfileController extends Controller
             $user = User::where('id', auth()->user()->id)->first();
 
             if ($request->hasFile('avatar')) {
-                Storage::delete('public/uploads/avatars/' . $user->avatar);
-                $user->avatar = basename($request->file('avatar')->store('public/uploads/avatars'));
+                Storage::delete('public/avatars/' . $user->avatar);
+                $user->avatar = basename($request->file('avatar')->store('public/avatars'));
             }
 
-            $user->save();
+            $user->update();
 
             return redirect()->back()->with('success', 'Data berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        } catch (\Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()
+                ->back()
+                ->withErrors('Terjadi kesalahan. Silakan coba lagi nanti.')
+                ->withInput();
         }
     }
 }
