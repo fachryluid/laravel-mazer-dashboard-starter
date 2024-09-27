@@ -1,6 +1,6 @@
 # Laravel Mazer Dashboard Starter
 
-A Laravel-based dashboard starter using the [Mazer](https://github.com/zuramai/mazer) theme, featuring built-in role management for Manager, Admin, and Basic User roles. This starter is customizable and flexible, providing a solid foundation for your Laravel applications.
+A Laravel-based dashboard starter using the [Mazer](https://github.com/zuramai/mazer) theme, featuring built-in roles (Manager, Admin, Basic User) and provides an intuitive settings interface for application configuration.
 
 ## Features
 
