@@ -5,3 +5,4 @@
 - [ ] setting seeder create or update
 - [ ] add "create" to managers migration filename
 - [ ] improve sidebar show menu logic
+- [ ] create variable "data" with user information in seeder it's easier to edit 
