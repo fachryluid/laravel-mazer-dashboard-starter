@@ -1,5 +1,7 @@
 - [x] route name user ganti users
 - [x] tambahkan method all di constant
 - [x] pisahkan action edit user personal & account
-- [] setting seeder berdasarkan env
-- [] setting seeder create or update
+- [ ] setting seeder berdasarkan env
+- [ ] setting seeder create or update
+- [ ] add "create" to managers migration filename
+- [ ] improve sidebar show menu logic
