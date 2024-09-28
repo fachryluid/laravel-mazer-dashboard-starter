@@ -7,3 +7,4 @@
 - [ ] improve sidebar show menu logic
 - [ ] create variable "data" with user information in seeder it's easier to edit
 - [ ] Remove "AuthenticateRoles" middleware and use policies for role-based authorization.
+- [ ] Add class "text-center" to user profile name in profile page.
