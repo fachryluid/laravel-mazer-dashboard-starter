@@ -1,9 +1,5 @@
 @php
-	$_USER = App\Constants\UserRole::USER;
-	$_ADMIN = App\Constants\UserRole::ADMIN;
-	$_MANAGER = App\Constants\UserRole::MANAGER;
-	$role = App\Utils\AuthUtils::getRole(auth()->user());
-
+	$user = auth()->user();
 	$links = [
 	    (object) [
 	        'title' => 'Menu',
@@ -15,14 +11,14 @@
 	                'link' => route('dashboard.index'),
 	            ],
 	            (object) [
-	                'roles' => [$_MANAGER],
+	                'show' => $user->isManager(),
 	                'label' => 'Admin',
 	                'icon' => 'bi bi-person-workspace',
 	                'hasSubItems' => false,
 	                'link' => route('dashboard.admins.index'),
 	            ],
 	            (object) [
-	                'roles' => [$_ADMIN],
+	                'show' => $user->isAdmin(),
 	                'label' => 'Master',
 	                'icon' => 'bi bi-database-fill',
 	                'hasSubItems' => true,
@@ -36,8 +32,8 @@
 	        ],
 	    ],
 	    (object) [
+	        'show' => $user->isManager(),
 	        'title' => 'Laporan',
-	        'roles' => [$_MANAGER],
 	        'items' => [
 	            (object) [
 	                'label' => 'Pengguna',
@@ -63,7 +59,7 @@
 	                'link' => route('dashboard.security.index'),
 	            ],
 	            (object) [
-	                'roles' => [$_ADMIN],
+	                'show' => $user->isAdmin(),
 	                'label' => 'Pengaturan',
 	                'icon' => 'bi bi-gear-fill',
 	                'hasSubItems' => false,
@@ -114,10 +110,10 @@
 		<div class="sidebar-menu">
 			<ul class="menu mt-0">
 				@foreach ($links as $link)
-					@if ((isset($link->roles) && in_array($role, $link->roles)) || !isset($link->roles))
+					@if ($link->show ?? true)
 						<li class="sidebar-title">{{ $link->title }}</li>
 						@foreach ($link->items as $item)
-							@if ((isset($item->roles) && in_array($role, $item->roles)) || !isset($item->roles))
+							@if ($item->show ?? true)
 								@if ($item->hasSubItems)
 									<li class="sidebar-item has-sub">
 										<a href="#" class='sidebar-link'>
@@ -126,7 +122,7 @@
 										</a>
 										<ul class="submenu">
 											@foreach ($item->subItems as $subItem)
-												@if ((isset($subItem->roles) && in_array($role, $subItem->roles)) || !isset($subItem->roles))
+												@if ($subItem->show ?? true)
 													<li class="submenu-item">
 														<a href="{{ $subItem->link }}" class="submenu-link">{{ $subItem->label }}</a>
 													</li>
@@ -136,9 +132,12 @@
 									</li>
 								@else
 									<li class="sidebar-item">
-										<a href="{{ $item->link }}" class='sidebar-link'>
+										<a href="{{ $item->link }}" class='sidebar-link d-flex'>
 											<i class="{{ $item->icon }}"></i>
-											<span>{{ $item->label }}</span>
+											<span class="flex-grow-1">{{ $item->label }}</span>
+											@if (isset($item->count))
+												<span class="badge bg-light-dark">{{ $item->count }}</span>
+											@endif
 										</a>
 									</li>
 								@endif
@@ -149,7 +148,7 @@
 				<form id="logoutForm" action="{{ route('dashboard.logout') }}" method="POST">
 					@csrf
 					<li class="sidebar-item">
-						<a href="javascript::void" class="sidebar-link" onclick="document.getElementById('logoutForm').submit();">
+						<a href="javascript:void(0)" class="sidebar-link" onclick="document.getElementById('logoutForm').submit();">
 							<i class="bi bi-door-closed-fill"></i>
 							<span>Keluar</span>
 						</a>
