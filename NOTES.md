@@ -4,7 +4,7 @@
 - [ ] setting seeder berdasarkan env
 - [ ] setting seeder create or update
 - [x] add "create" to managers migration filename
-- [ ] improve sidebar show menu logic
-- [ ] create variable "data" with user information in seeder it's easier to edit
+- [x] improve sidebar show menu logic
+- [x] create variable "data" with user information in seeder, so it's easier to edit
 - [ ] Remove "AuthenticateRoles" middleware and use policies for role-based authorization.
-- [ ] Add class "text-center" to user profile name in profile page.
+- [x] add class "text-center" to user profile name in profile page.
