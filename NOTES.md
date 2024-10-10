@@ -3,7 +3,7 @@
 - [x] pisahkan action edit user personal & account
 - [ ] setting seeder berdasarkan env
 - [ ] setting seeder create or update
-- [ ] add "create" to managers migration filename
+- [x] add "create" to managers migration filename
 - [ ] improve sidebar show menu logic
 - [ ] create variable "data" with user information in seeder it's easier to edit
 - [ ] Remove "AuthenticateRoles" middleware and use policies for role-based authorization.
