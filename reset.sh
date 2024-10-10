@@ -1,5 +1,5 @@
 #!/bin/bash
 
-php artisan migrate:refresh
+php artisan migrate:fresh
 php artisan db:seed
 php artisan optimize
