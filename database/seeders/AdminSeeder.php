@@ -12,24 +12,28 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        $adminExists = User::where('username', 'admin')->exists();
+        $users = [
+            [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'email' => 'admin@gmail.com',
+                'gender' => UserGender::MALE,
+                'birthday' => '2002-10-08',
+                'phone' => '0812-3456-7890',
+                'password' => Hash::make('admin')
+            ]
+        ];
 
-        if ($adminExists) {
-            return;
+        foreach ($users as $user) {
+            $adminExists = User::where('username', $user['username'])->exists();
+
+            if (!$adminExists) {
+                $user = User::create($user);
+
+                Admin::create([
+                    'user_id' => $user->id
+                ]);
+            }
         }
-
-        $user = User::create([
-            'name' => 'Admin',
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'gender' => UserGender::MALE,
-            'birthday' => '2002-10-08',
-            'phone' => '0812-3456-7890',
-            'password' => Hash::make('admin')
-        ]);
-
-        Admin::create([
-            'user_id' => $user->id
-        ]);
     }
 }
