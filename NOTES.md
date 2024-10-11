@@ -6,5 +6,5 @@
 - [x] add "create" to managers migration filename
 - [x] improve sidebar show menu logic
 - [x] create variable "data" with user information in seeder, so it's easier to edit
-- [ ] Remove "AuthenticateRoles" middleware and use policies for role-based authorization.
+- [x] Remove "AuthenticateRoles" middleware and use policies for role-based authorization.
 - [x] add class "text-center" to user profile name in profile page.
