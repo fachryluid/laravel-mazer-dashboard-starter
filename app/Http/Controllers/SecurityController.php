@@ -17,6 +17,8 @@ class SecurityController extends Controller
 
     public function update_password(UpdatePasswordRequest $request)
     {
+        $this->authorize('updatePassword', auth()->user());
+
         try {
             $user = User::where('id', auth()->user()->id)->firstOrFail();
             $user->password = Hash::make($request->new_password);

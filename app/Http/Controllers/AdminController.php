@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Admin::class, 'admin');
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {

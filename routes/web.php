@@ -1,6 +1,5 @@
 <?php
 
-use App\Constants\UserRole;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BasicUserController;
@@ -26,28 +25,26 @@ Route::name('auth.')->group(function () {
 
 Route::prefix('dashboard')->name('dashboard.')->middleware(['web', 'auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-    Route::prefix('master')->name('master.')->middleware(['roles:' . implode(',', [UserRole::ADMIN])])->group(function () {
+    Route::prefix('master')->name('master.')->group(function () {
         Route::resource('/users', BasicUserController::class)->names('users')->parameters(['users' => 'basic_user']);
         Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('users.update.password');
     });
-    Route::middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
-        Route::resource('/admins', AdminController::class)->names('admins');
-    });
-    Route::prefix('reports')->name('reports.')->middleware(['roles:' . implode(',', [UserRole::MANAGER])])->group(function () {
+    Route::resource('/admins', AdminController::class)->names('admins');
+    Route::prefix('reports')->name('reports.')->group(function () {
         Route::get('/users', [ReportController::class, 'users'])->name('users');
         Route::get('/users/pdf/download', [ReportController::class, 'users_pdf_download'])->name('users.pdf.download');
         Route::get('/users/pdf/preview', [ReportController::class, 'users_pdf_preview'])->name('users.pdf.preview');
     });
-    Route::prefix('profile')->name('profile.')->middleware([])->group(function () {
+    Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
         Route::put('/update', [ProfileController::class, 'update'])->name('update');
         Route::put('/avatar', [ProfileController::class, 'avatar'])->name('avatar');
     });
-    Route::prefix('security')->name('security.')->middleware([])->group(function () {
+    Route::prefix('security')->name('security.')->group(function () {
         Route::get('/', [SecurityController::class, 'index'])->name('index');
         Route::put('/update/password', [SecurityController::class, 'update_password'])->name('update.password');
     });
-    Route::prefix('setting')->name('setting.')->middleware(['roles:' . implode(',', [UserRole::ADMIN])])->group(function () {
+    Route::prefix('setting')->name('setting.')->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('index');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
         Route::get('/load-file/auth-bg', [FileController::class, 'loadFileAuthBg']);

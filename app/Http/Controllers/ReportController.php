@@ -31,6 +31,8 @@ class ReportController extends Controller
 
     public function users(Request $request)
     {
+        $this->authorize('reportUsers', User::class);
+
         if ($request->ajax()) {
             $query = User::query();
             $this->applyFilterUsers($query, $request);
@@ -46,6 +48,8 @@ class ReportController extends Controller
 
     public function users_pdf_preview(Request $request)
     {
+        $this->authorize('reportUsers', User::class);
+
         $query = User::query();
         $this->applyFilterUsers($query, $request);
         $users = $query->latest()->get();
@@ -57,6 +61,8 @@ class ReportController extends Controller
 
     public function users_pdf_download(Request $request)
     {
+        $this->authorize('reportUsers', User::class);
+
         $query = User::query();
         $this->applyFilterUsers($query, $request);
         $users = $query->latest()->get();

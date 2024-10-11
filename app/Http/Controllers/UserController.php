@@ -10,6 +10,8 @@ class UserController extends Controller
 {
     public function update_password(UpdateUserPasswordRequest $request, User $user)
     {
+        $this->authorize('updatePassword', $user);
+
         try {
             $user->password = Hash::make($request->new_password);
             $user->save();

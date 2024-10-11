@@ -11,7 +11,7 @@
 	                'link' => route('dashboard.index'),
 	            ],
 	            (object) [
-	                'show' => $user->isManager(),
+									'show' => $user->can('viewAny', App\Models\Admin::class),
 	                'label' => 'Admin',
 	                'icon' => 'bi bi-person-workspace',
 	                'hasSubItems' => false,
@@ -24,6 +24,7 @@
 	                'hasSubItems' => true,
 	                'subItems' => [
 	                    (object) [
+													'show' => $user->can('viewAny', App\Models\BasicUser::class),
 	                        'label' => 'Pengguna',
 	                        'link' => route('dashboard.master.users.index'),
 	                    ],
@@ -36,6 +37,7 @@
 	        'title' => 'Laporan',
 	        'items' => [
 	            (object) [
+									'show' => $user->can('reportUsers', App\Models\User::class),
 	                'label' => 'Pengguna',
 	                'icon' => 'bi bi-people-fill',
 	                'hasSubItems' => false,
@@ -59,7 +61,7 @@
 	                'link' => route('dashboard.security.index'),
 	            ],
 	            (object) [
-	                'show' => $user->isAdmin(),
+								'show' => $user->can('viewAny', App\Models\Setting::class),
 	                'label' => 'Pengaturan',
 	                'icon' => 'bi bi-gear-fill',
 	                'hasSubItems' => false,

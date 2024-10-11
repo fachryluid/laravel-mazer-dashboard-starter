@@ -13,6 +13,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BasicUserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(BasicUser::class, 'basic_user');
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {

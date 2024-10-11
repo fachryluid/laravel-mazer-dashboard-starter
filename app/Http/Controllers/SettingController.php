@@ -10,6 +10,8 @@ class SettingController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Setting::class);
+
         $setting = Setting::where('id', 1)->first();
 
         return view('pages.dashboard.settings.index', compact('setting'));
@@ -17,6 +19,8 @@ class SettingController extends Controller
 
     public function update(UpdateSettingRequest $request)
     {
+        $this->authorize('update', Setting::class);
+
         try {
             $setting = Setting::where('id', 1)->first();
 
