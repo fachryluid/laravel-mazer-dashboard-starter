@@ -1,6 +1,13 @@
 @if (session('success'))
 	<div class="alert alert-light-success color-success alert-dismissible fade show">
-		{{ session('success') }}
+		{!! session('success') !!}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+@endif
+
+@if (session('warning'))
+	<div class="alert alert-light-warning color-warning alert-dismissible fade show">
+		{!! session('warning') !!}
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 @endif
@@ -14,7 +21,7 @@
 				@endforeach
 			</ul>
 		@else
-			<p>{{ $errors->all()[0] }}</p>
+			<p>{!! $errors->all()[0] !!}</p>
 		@endif
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
