@@ -9,11 +9,9 @@
 ])
 @section('title', 'Master Pengguna')
 @push('css')
-	<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-	<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
 @endpush
 @section('content')
 	<section class="row">
@@ -38,7 +36,7 @@
 		</div>
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 					<h4 class="card-title pl-1">Daftar Pengguna</h4>
 					<div class="d-flex gap-2">
 						<a href="{{ route('dashboard.master.users.create') }}" class="btn btn-primary btn-sm">
@@ -66,9 +64,17 @@
 	</section>
 @endsection
 @push('scripts')
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.js"></script>
+	<script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+	<script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
+				order: [],
+				responsive: true,
 				processing: true,
 				serverSide: true,
 				ajax: {

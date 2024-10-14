@@ -10,7 +10,7 @@
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 					<h4 class="card-title pl-1">Detail {{ $admin->user->name }}</h4>
 					<div class="d-flex gap-2">
 						<a href="{{ route('dashboard.admins.edit', $admin->uuid) }}" class="btn btn-success btn-sm">
@@ -57,7 +57,11 @@
 						</tr>
 						<tr>
 							<th>Email</th>
-							<td>{{ $admin->user->email ?? '-' }}</td>
+							<td>
+								<div style="word-wrap: break-word; word-break: break-all;">
+									{{ $admin->user->email ?? '-' }}
+								</div>
+							</td>
 						</tr>
 					</table>
 				</div>
